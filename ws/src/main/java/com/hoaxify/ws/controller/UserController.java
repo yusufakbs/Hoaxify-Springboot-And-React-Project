@@ -1,5 +1,6 @@
 package com.hoaxify.ws.controller;
 
+import com.hoaxify.ws.dto.UserCreate;
 import com.hoaxify.ws.entity.User;
 import com.hoaxify.ws.exception.ApiError;
 import com.hoaxify.ws.exception.NotUniqueEmailException;
@@ -27,8 +28,8 @@ public class UserController {
 
 
     @PostMapping("/api/v1/users")
-    GenericMessage createUser(@Valid @RequestBody User user) {
-        userService.save(user);
+    GenericMessage createUser(@Valid @RequestBody UserCreate user) {
+        userService.save(user.toUser());
         String message = Messages.getMessageForLocale("hoaxify.create.user.success.message", LocaleContextHolder.getLocale());
         return new GenericMessage(message);
     }

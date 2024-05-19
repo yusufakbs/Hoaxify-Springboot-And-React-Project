@@ -1,11 +1,6 @@
 package com.hoaxify.ws.entity;
 
-import com.hoaxify.ws.entity.validation.UniqueEmail;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "tbl_users", uniqueConstraints = @UniqueConstraint(columnNames = {"email"}))
@@ -14,19 +9,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "{hoaxify.constraint.username.notblank}")
-    @Size(min = 4, max = 50)
     private String username;
-    //Since we encrypt the password with the encoder, we need to pay attention to the size here.
-    //This usually corresponds to between 60 and 68 characters.
-    @Size(min = 5, max = 70)
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$", message = "{hoaxify.constraint.password.pattern}")
+
     private String password;
 
-    @NotBlank
-    @Email
-    @UniqueEmail
     private String email;
+
+    private boolean active = false;
+
+    private String activationToken;
 
     public User(String username, String password, String email) {
         this.username = username;
@@ -67,5 +58,21 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public String getActivationToken() {
+        return activationToken;
+    }
+
+    public void setActivationToken(String activationToken) {
+        this.activationToken = activationToken;
     }
 }
