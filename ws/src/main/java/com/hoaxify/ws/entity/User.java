@@ -1,5 +1,6 @@
 package com.hoaxify.ws.entity;
 
+import com.hoaxify.ws.entity.validation.UniqueEmail;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -13,17 +14,18 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "{hoaxify.constraint.username.notblank}")
     @Size(min = 4, max = 50)
     private String username;
     //Since we encrypt the password with the encoder, we need to pay attention to the size here.
     //This usually corresponds to between 60 and 68 characters.
     @Size(min = 5, max = 70)
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$", message = "{hoaxify.constraint.password.pattern}")
     private String password;
 
     @NotBlank
     @Email
+    @UniqueEmail
     private String email;
 
     public User(String username, String password, String email) {
