@@ -1,14 +1,16 @@
 package com.hoaxify.ws.exception;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.*;
 
-
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class ApiError {
     private int status;
     private String message;
     private String path;
     private long timestamp = new Date().getTime();
-    private Map<String, String> validationErrors = new HashMap<String, String>();
+    private Map<String, String> validationErrors = null;
 
     public int getStatus() {
         return status;

@@ -2,6 +2,7 @@ package com.hoaxify.ws.controller;
 
 import com.hoaxify.ws.dto.UserCreate;
 import com.hoaxify.ws.entity.User;
+import com.hoaxify.ws.exception.ActivationNotificationException;
 import com.hoaxify.ws.exception.ApiError;
 import com.hoaxify.ws.exception.NotUniqueEmailException;
 import com.hoaxify.ws.service.UserService;
@@ -57,7 +58,16 @@ public class UserController {
         apiError.setMessage(exception.getMessage());
         apiError.setStatus(400);
         apiError.setValidationErrors(exception.getValidationErrors());
-        return ResponseEntity.badRequest().body(apiError);
+        return ResponseEntity.status(400).body(apiError);
+    }
+
+    @ExceptionHandler(ActivationNotificationException.class)
+    ResponseEntity<ApiError> handleActivationNotificationException(ActivationNotificationException exception) {
+        ApiError apiError = new ApiError();
+        apiError.setPath("/api/v1/users");
+        apiError.setMessage(exception.getMessage());
+        apiError.setStatus(502);
+        return ResponseEntity.status(502).body(apiError);
     }
 
 

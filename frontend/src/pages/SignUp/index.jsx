@@ -71,8 +71,13 @@ export function SignUp() {
             const response = await signUp({username, email, password})
             setSuccessMessage(response.data.message);
         } catch (axiosError) {
-            if (axiosError.response?.data && axiosError.response.data.status === 400) {
-                setErrors((axiosError.response.data.validationErrors))
+            if (axiosError.response?.data ) {
+                if(axiosError.response.data.status === 400) {
+                    setErrors((axiosError.response.data.validationErrors))
+                }else {
+                    setGeneralError(axiosError.response.data.message)
+                }
+
             } else {
                 setGeneralError('Unexpected error occured. Please try again.')
             }
