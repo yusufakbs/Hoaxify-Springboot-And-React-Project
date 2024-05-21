@@ -1,9 +1,9 @@
 package com.hoaxify.ws.controller;
 
 import com.hoaxify.ws.dto.UserCreate;
-import com.hoaxify.ws.entity.User;
 import com.hoaxify.ws.exception.ActivationNotificationException;
 import com.hoaxify.ws.exception.ApiError;
+import com.hoaxify.ws.exception.InvalidTokenException;
 import com.hoaxify.ws.exception.NotUniqueEmailException;
 import com.hoaxify.ws.service.UserService;
 import com.hoaxify.ws.shared.GenericMessage;
@@ -16,8 +16,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -34,6 +32,14 @@ public class UserController {
         String message = Messages.getMessageForLocale("hoaxify.create.user.success.message", LocaleContextHolder.getLocale());
         return new GenericMessage(message);
     }
+
+    @PatchMapping("/api/v1/users/{token}/active")
+    GenericMessage activateUser(@PathVariable String token) {
+        userService.activateUser(token);
+        String message = Messages.getMessageForLocale("hoaxify.activate.user.success.message", LocaleContextHolder.getLocale());
+        return new GenericMessage(message);
+    }
+
 
     @ExceptionHandler
     ResponseEntity<ApiError> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
@@ -70,5 +76,13 @@ public class UserController {
         return ResponseEntity.status(502).body(apiError);
     }
 
+    @ExceptionHandler(InvalidTokenException.class)
+    ResponseEntity<ApiError> handleInvalidTokenException(InvalidTokenException exception) {
+        ApiError apiError = new ApiError();
+        apiError.setPath("/api/v1/users");
+        apiError.setMessage(exception.getMessage());
+        apiError.setStatus(400);
+        return ResponseEntity.status(400).body(apiError);
+    }
 
 }

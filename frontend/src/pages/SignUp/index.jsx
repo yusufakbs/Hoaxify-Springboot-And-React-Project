@@ -2,7 +2,8 @@ import {useEffect, useMemo, useState} from "react";
 import {signUp} from "./api.js";
 import {Input} from "./components/Input.jsx";
 import {useTranslation} from "react-i18next";
-import {LanguageSelector} from "../../shared/components/LanguageSelector.jsx";
+import {Alert} from "../../shared/components/Alert.jsx";
+import {Spinner} from "../../shared/components/Spinner.jsx";
 
 export function SignUp() {
 
@@ -14,7 +15,7 @@ export function SignUp() {
     const [successMessage, setSuccessMessage] = useState();
     const [errors, setErrors] = useState({});
     const [generalError, setGeneralError] = useState();
-    const { t} = useTranslation();
+    const {t} = useTranslation();
 
     useEffect(() => {
         setErrors(function (lastErrors) {
@@ -71,10 +72,10 @@ export function SignUp() {
             const response = await signUp({username, email, password})
             setSuccessMessage(response.data.message);
         } catch (axiosError) {
-            if (axiosError.response?.data ) {
-                if(axiosError.response.data.status === 400) {
+            if (axiosError.response?.data) {
+                if (axiosError.response.data.status === 400) {
                     setErrors((axiosError.response.data.validationErrors))
-                }else {
+                } else {
                     setGeneralError(axiosError.response.data.message)
                 }
 
@@ -95,25 +96,23 @@ export function SignUp() {
                 <div className="card-body">
                     <Input id="username" label={t('username')} error={errors.username}
                            onChange={(event) => setUsername(event.target.value)}/>
-                    <Input id="email" label={t('email')}error={errors.email}
+                    <Input id="email" label={t('email')} error={errors.email}
                            onChange={(event) => setEmail(event.target.value)}/>
-                    <Input id="password" label={t('password')}error={errors.password} type="password"
+                    <Input id="password" label={t('password')} error={errors.password} type="password"
                            onChange={(event) => setPassword(event.target.value)}/>
                     <Input id="passwordRepeat" label={t('passwordRepeat')} error={passwordRepeatError} type="password"
                            onChange={(event) => setPasswordRepeat(event.target.value)}/>
-                    {successMessage && <div className="alert alert-success" role="alert">{successMessage}</div>}
-                    {generalError && <div className="alert alert-danger" role="alert">{generalError}</div>}
+                    {successMessage && <Alert>{successMessage}</Alert>}
+                    {generalError && <Alert styleType="danger">{generalError}</Alert>}
                     <div className="text-center">
                         <button className="btn btn-primary"
                                 disabled={apiProgress || (!password || password != passwordRepeat)}>
-                            {apiProgress &&
-                                <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>}
+                            {apiProgress && <Spinner sm={true}/>}
                             {t('signUp')}
                         </button>
                     </div>
                 </div>
             </form>
-            <LanguageSelector/>
         </div>
     </div>)
 }

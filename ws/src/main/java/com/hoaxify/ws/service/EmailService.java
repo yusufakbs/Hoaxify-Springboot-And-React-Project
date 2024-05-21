@@ -42,7 +42,7 @@ public class EmailService {
             <html>
             <body>
             <h1>${title}</h1>
-            <a href="${url}">${clickHere}</a>
+            <a href="${url}" target="_blank">${clickHere}</a>
             </body>
             </html>
             """;

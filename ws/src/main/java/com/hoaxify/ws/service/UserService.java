@@ -1,6 +1,7 @@
 package com.hoaxify.ws.service;
 
 import com.hoaxify.ws.entity.User;
+import com.hoaxify.ws.exception.InvalidTokenException;
 import com.hoaxify.ws.exception.ActivationNotificationException;
 import com.hoaxify.ws.exception.NotUniqueEmailException;
 import com.hoaxify.ws.repository.UserRepository;
@@ -44,5 +45,13 @@ public class UserService {
 
     }
 
-
+    public void activateUser(String token) {
+        User inDB = userRepository.findByActivationToken(token);
+        if (inDB == null) {
+            throw new InvalidTokenException();
+        }
+        inDB.setActive(true);
+        inDB.setActivationToken(null);
+        userRepository.save(inDB);
+    }
 }
