@@ -1,5 +1,6 @@
 package com.hoaxify.ws.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -11,12 +12,17 @@ public class User {
 
     private String username;
 
+    @JsonIgnore //Ignores fields that we do not want to be returned in the rotating response
     private String password;
 
     private String email;
 
+    private String image;
+
+    @JsonIgnore
     private boolean active = false;
 
+    @JsonIgnore
     private String activationToken;
 
     public User(String username, String password, String email) {
@@ -58,6 +64,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public boolean isActive() {

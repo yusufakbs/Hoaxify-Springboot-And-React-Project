@@ -1,6 +1,7 @@
 package com.hoaxify.ws.controller;
 
 import com.hoaxify.ws.dto.UserCreate;
+import com.hoaxify.ws.dto.UserDTO;
 import com.hoaxify.ws.exception.ActivationNotificationException;
 import com.hoaxify.ws.exception.ApiError;
 import com.hoaxify.ws.exception.InvalidTokenException;
@@ -11,6 +12,8 @@ import com.hoaxify.ws.shared.Messages;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -38,6 +41,11 @@ public class UserController {
         userService.activateUser(token);
         String message = Messages.getMessageForLocale("hoaxify.activate.user.success.message", LocaleContextHolder.getLocale());
         return new GenericMessage(message);
+    }
+
+    @GetMapping("/api/v1/users")
+    Page<UserDTO> getAllUsers(Pageable page) {
+        return userService.getUsers(page).map(UserDTO::new);
     }
 
 

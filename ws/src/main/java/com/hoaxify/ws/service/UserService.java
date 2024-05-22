@@ -8,6 +8,8 @@ import com.hoaxify.ws.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.mail.MailException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -53,5 +55,9 @@ public class UserService {
         inDB.setActive(true);
         inDB.setActivationToken(null);
         userRepository.save(inDB);
+    }
+
+    public Page<User> getUsers(Pageable page) {
+        return userRepository.findAll(page);
     }
 }

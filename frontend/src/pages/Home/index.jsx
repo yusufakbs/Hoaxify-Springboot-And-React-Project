@@ -1,3 +1,5 @@
+import {UserList} from "./components/UserList.jsx";
+
 export function HomePage() {
-    return <div>Home</div>;
+    return <UserList/>;
 }
