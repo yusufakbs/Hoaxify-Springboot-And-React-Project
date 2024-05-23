@@ -5,5 +5,7 @@
   "genericError": "Beklenmedik bir hata olustu, lutfen tekrar deneyin.",
   "password": "Sifre",
   "passwordMismatch": "Sifreleriniz Eslesmiyor",
-  "passwordRepeat": "Sifre Tekrari"
+  "passwordRepeat": "Sifre Tekrari",
+  "userNotFoundError": "Kullanici bulunamadi",
+  "login": "Giriş yap"
 }
