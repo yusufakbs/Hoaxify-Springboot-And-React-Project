@@ -1,10 +1,12 @@
-package com.hoaxify.ws.service;
+package com.hoaxify.ws.user;
 
-import com.hoaxify.ws.entity.User;
-import com.hoaxify.ws.exception.InvalidTokenException;
-import com.hoaxify.ws.exception.ActivationNotificationException;
-import com.hoaxify.ws.exception.NotUniqueEmailException;
-import com.hoaxify.ws.repository.UserRepository;
+import com.hoaxify.ws.user.entity.User;
+import com.hoaxify.ws.email.exception.InvalidTokenException;
+import com.hoaxify.ws.email.exception.ActivationNotificationException;
+import com.hoaxify.ws.user.exception.NotFoundException;
+import com.hoaxify.ws.user.exception.NotUniqueEmailException;
+import com.hoaxify.ws.email.EmailService;
+import com.hoaxify.ws.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -59,5 +61,13 @@ public class UserService {
 
     public Page<User> getUsers(Pageable page) {
         return userRepository.findAll(page);
+    }
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    public User getUser(long id) {
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
     }
 }

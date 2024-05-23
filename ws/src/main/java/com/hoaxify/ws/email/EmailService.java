@@ -1,4 +1,4 @@
-package com.hoaxify.ws.service;
+package com.hoaxify.ws.email;
 
 import com.hoaxify.ws.configuration.HoaxifyProperties;
 import jakarta.annotation.PostConstruct;

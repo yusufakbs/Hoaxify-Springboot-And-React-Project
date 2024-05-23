@@ -1,4 +1,4 @@
-package com.hoaxify.ws.exception;
+package com.hoaxify.ws.error;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

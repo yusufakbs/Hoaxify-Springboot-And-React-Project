@@ -1,6 +1,6 @@
-package com.hoaxify.ws.dto;
+package com.hoaxify.ws.user.dto;
 
-import com.hoaxify.ws.entity.User;
+import com.hoaxify.ws.user.entity.User;
 
 public class UserDTO {
 

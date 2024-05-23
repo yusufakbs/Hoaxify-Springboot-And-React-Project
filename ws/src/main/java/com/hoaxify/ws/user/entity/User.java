@@ -1,4 +1,4 @@
-package com.hoaxify.ws.entity;
+package com.hoaxify.ws.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

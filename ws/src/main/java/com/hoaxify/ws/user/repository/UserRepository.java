@@ -1,7 +1,7 @@
-package com.hoaxify.ws.repository;
+package com.hoaxify.ws.user.repository;
 
 
-import com.hoaxify.ws.entity.User;
+import com.hoaxify.ws.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

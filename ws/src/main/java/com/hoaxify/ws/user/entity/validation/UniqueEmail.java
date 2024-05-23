@@ -1,4 +1,4 @@
-package com.hoaxify.ws.entity.validation;
+package com.hoaxify.ws.user.entity.validation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;

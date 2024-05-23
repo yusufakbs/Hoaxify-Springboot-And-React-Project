@@ -1,7 +1,7 @@
 package com.hoaxify.ws;
 
-import com.hoaxify.ws.entity.User;
-import com.hoaxify.ws.repository.UserRepository;
+import com.hoaxify.ws.user.entity.User;
+import com.hoaxify.ws.user.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

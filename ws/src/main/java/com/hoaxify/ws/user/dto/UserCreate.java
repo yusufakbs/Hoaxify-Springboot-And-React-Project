@@ -1,7 +1,7 @@
-package com.hoaxify.ws.dto;
+package com.hoaxify.ws.user.dto;
 
-import com.hoaxify.ws.entity.User;
-import com.hoaxify.ws.entity.validation.UniqueEmail;
+import com.hoaxify.ws.user.entity.User;
+import com.hoaxify.ws.user.entity.validation.UniqueEmail;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

@@ -1,4 +1,4 @@
-package com.hoaxify.ws.exception;
+package com.hoaxify.ws.email.exception;
 
 import com.hoaxify.ws.shared.Messages;
 import org.springframework.context.i18n.LocaleContextHolder;
