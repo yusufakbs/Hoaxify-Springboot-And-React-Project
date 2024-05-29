@@ -1,6 +1,7 @@
 package com.hoaxify.ws.user;
 
 
+import com.hoaxify.ws.auth.token.TokenService;
 import com.hoaxify.ws.user.dto.UserCreate;
 import com.hoaxify.ws.user.dto.UserDTO;
 import com.hoaxify.ws.shared.GenericMessage;
@@ -19,6 +20,10 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    TokenService tokenService;
+
+
 
     @PostMapping("/api/v1/users")
     GenericMessage createUser(@Valid @RequestBody UserCreate user) {
@@ -35,8 +40,9 @@ public class UserController {
     }
 
     @GetMapping("/api/v1/users")
-    Page<UserDTO> getAllUsers(Pageable page) {
-        return userService.getUsers(page).map(UserDTO::new);
+    Page<UserDTO> getAllUsers(Pageable page, @RequestHeader(name = "Authorization", required = false) String authorizationHeader) {
+        var loggedInUser = tokenService.verifyToken(authorizationHeader);
+        return userService.getUsers(page, loggedInUser).map(UserDTO::new);
     }
 
     @GetMapping("/api/v1/users/{id}")
