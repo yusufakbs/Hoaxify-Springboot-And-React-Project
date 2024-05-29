@@ -12,7 +12,7 @@ export function User() {
             <Spinner/>
             <span className="spinner-border" aria-hidden="true"></span>
         </Alert>}
-        {user && <ProfileCard user = {user}/>}
+        {user && <ProfileCard user={user}/>}
         {errorMessage && <Alert styleType="danger">{errorMessage}</Alert>}
     </>);
 

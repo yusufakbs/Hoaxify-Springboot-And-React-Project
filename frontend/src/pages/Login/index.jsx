@@ -4,16 +4,21 @@ import {Alert} from "../../shared/components/Alert.jsx";
 import {Input} from "../../shared/components/Input.jsx";
 import {Button} from "../../shared/components/Button.jsx";
 import {login} from "./api.js";
+import {useAuthDispatch} from "../../shared/state/context.jsx";
+import {useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {loginSuccess} from "../../shared/state/redux.js";
 
 export function Login() {
-
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const [apiProgress, setApiProgress] = useState(false);
     const [errors, setErrors] = useState({});
     const [generalError, setGeneralError] = useState();
     const {t} = useTranslation();
-
+    const navigate = useNavigate();
+    // const dispatch = useAuthDispatch();
+    const dispatch = useDispatch();
     useEffect(() => {
         setErrors(function (lastErrors) {
 
@@ -39,7 +44,10 @@ export function Login() {
         setApiProgress(true);
         //
         try {
-            await login({email, password})
+            const response = await login({email, password})
+            // dispatch({type: 'login-success', data: response.data.user});
+            dispatch(loginSuccess(response.data.user))
+            navigate("/");
         } catch (axiosError) {
             if (axiosError.response?.data) {
                 if (axiosError.response.data.status === 400) {
