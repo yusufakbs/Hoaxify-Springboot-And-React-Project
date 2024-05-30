@@ -9,7 +9,6 @@ import com.hoaxify.ws.user.entity.User;
 import com.hoaxify.ws.auth.exception.AuthenticationException;
 import com.hoaxify.ws.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +21,8 @@ public class AuthService {
     @Autowired
     TokenService tokenService;
 
-    PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     public AuthResponse authenticate(Credentials creds) {
         User inDB = userService.findByEmail(creds.email());

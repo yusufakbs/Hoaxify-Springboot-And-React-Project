@@ -1,6 +1,5 @@
 package com.hoaxify.ws.user;
 
-import com.hoaxify.ws.user.dto.UserDTO;
 import com.hoaxify.ws.user.dto.UserUpdate;
 import com.hoaxify.ws.user.entity.User;
 import com.hoaxify.ws.email.exception.InvalidTokenException;
@@ -15,7 +14,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.mail.MailException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +25,8 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     EmailService emailService;
@@ -62,7 +61,7 @@ public class UserService {
     }
 
     public Page<User> getUsers(Pageable page, User loggedInUser) {
-        if(loggedInUser == null) {
+        if (loggedInUser == null) {
             return userRepository.findAll(page);
         }
         return userRepository.findByIdNot(loggedInUser.getId(), page);
