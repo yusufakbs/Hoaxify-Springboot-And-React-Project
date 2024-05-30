@@ -2,10 +2,13 @@ package com.hoaxify.ws.user;
 
 
 import com.hoaxify.ws.auth.token.TokenService;
+import com.hoaxify.ws.email.exception.InvalidTokenException;
 import com.hoaxify.ws.user.dto.UserCreate;
 import com.hoaxify.ws.user.dto.UserDTO;
 import com.hoaxify.ws.shared.GenericMessage;
 import com.hoaxify.ws.shared.Messages;
+import com.hoaxify.ws.user.dto.UserUpdate;
+import com.hoaxify.ws.user.exception.AuthorizationException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -22,7 +25,6 @@ public class UserController {
 
     @Autowired
     TokenService tokenService;
-
 
 
     @PostMapping("/api/v1/users")
@@ -50,5 +52,14 @@ public class UserController {
         return new UserDTO(userService.getUser(id));
     }
 
+    @PutMapping("/api/v1/users/{id}")
+    UserDTO updateUser(@PathVariable long id, @Valid @RequestBody UserUpdate userUpdate, @RequestHeader(name = "Authorization", required = false) String authorizationHeader) {
+        var loggedInUser = tokenService.verifyToken(authorizationHeader);
+        if (loggedInUser == null || !loggedInUser.getId().equals(id)) {
+            throw new AuthorizationException();
+        }
+        return new UserDTO(userService.userUpdate(id, userUpdate));
+
+    }
 
 }

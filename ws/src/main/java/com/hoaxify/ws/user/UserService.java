@@ -1,5 +1,7 @@
 package com.hoaxify.ws.user;
 
+import com.hoaxify.ws.user.dto.UserDTO;
+import com.hoaxify.ws.user.dto.UserUpdate;
 import com.hoaxify.ws.user.entity.User;
 import com.hoaxify.ws.email.exception.InvalidTokenException;
 import com.hoaxify.ws.email.exception.ActivationNotificationException;
@@ -72,5 +74,11 @@ public class UserService {
 
     public User getUser(long id) {
         return userRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
+    }
+
+    public User userUpdate(long id, UserUpdate userUpdate) {
+        User inDb = getUser(id);
+        inDb.setUsername(userUpdate.username());
+        return userRepository.save(inDb);
     }
 }

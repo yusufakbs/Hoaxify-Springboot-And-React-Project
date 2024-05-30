@@ -4,6 +4,7 @@ import com.hoaxify.ws.auth.exception.AuthenticationException;
 import com.hoaxify.ws.email.exception.ActivationNotificationException;
 import com.hoaxify.ws.email.exception.InvalidTokenException;
 import com.hoaxify.ws.shared.Messages;
+import com.hoaxify.ws.user.exception.AuthorizationException;
 import com.hoaxify.ws.user.exception.NotFoundException;
 import com.hoaxify.ws.user.exception.NotUniqueEmailException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 public class ErrorHandler {
 
 
-    @ExceptionHandler({MethodArgumentNotValidException.class, NotUniqueEmailException.class, ActivationNotificationException.class, InvalidTokenException.class, NotFoundException.class, AuthenticationException.class})
+    @ExceptionHandler({MethodArgumentNotValidException.class, NotUniqueEmailException.class, ActivationNotificationException.class, InvalidTokenException.class, NotFoundException.class, AuthenticationException.class, AuthorizationException.class})
     ResponseEntity<ApiError> handleMethodArgumentNotValidException(Exception exception, HttpServletRequest request) {
         ApiError apiError = new ApiError();
         apiError.setPath(request.getRequestURI());
@@ -46,6 +47,8 @@ public class ErrorHandler {
             apiError.setStatus(404);
         } else if (exception instanceof AuthenticationException) {
             apiError.setStatus(401);
+        }else if (exception instanceof AuthorizationException) {
+            apiError.setStatus(403);
         }
 
         return ResponseEntity.status(apiError.getStatus()).body(apiError);
