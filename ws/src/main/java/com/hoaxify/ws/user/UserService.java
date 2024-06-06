@@ -1,6 +1,7 @@
 package com.hoaxify.ws.user;
 
 import com.hoaxify.ws.configuration.CurrentUser;
+import com.hoaxify.ws.file.FileService;
 import com.hoaxify.ws.user.dto.UserUpdate;
 import com.hoaxify.ws.user.entity.User;
 import com.hoaxify.ws.email.exception.InvalidTokenException;
@@ -31,6 +32,9 @@ public class UserService {
 
     @Autowired
     EmailService emailService;
+
+    @Autowired
+    FileService fileService;
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -79,6 +83,11 @@ public class UserService {
     public User userUpdate(long id, UserUpdate userUpdate) {
         User inDb = getUser(id);
         inDb.setUsername(userUpdate.username());
+        if (userUpdate.image() != null) {
+            String fileName = fileService.saveBase64StringAsFile(userUpdate.image());
+            fileService.deleteProfileImage(inDb.getImage());
+            inDb.setImage(fileName);
+        }
         return userRepository.save(inDb);
     }
 }
