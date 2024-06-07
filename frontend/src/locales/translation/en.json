@@ -7,5 +7,6 @@
   "passwordMismatch": "Password Mismatch",
   "genericError": "Unexpected error occured. Please try again.",
   "userNotFoundError": "User not found",
-  "login": "Login"
+  "login": "Login",
+  "profileImage": "Profile Image"
 }

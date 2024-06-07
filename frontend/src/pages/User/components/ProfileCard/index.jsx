@@ -7,6 +7,7 @@ import {UserEditForm} from "./UserEditForm.jsx";
 export function ProfileCard({user}) {
     const authState = useAuthState();
     const [editMode, setEditMode] = useState(false);
+    const [tempImage, setTempImage] = useState();
 
 
     const isEditButtonVisible = !editMode && authState.id === user.id;
@@ -14,12 +15,12 @@ export function ProfileCard({user}) {
 
     return (<div className="card">
         <div className="card-header text-center">
-            <ProfileImage width={200}/>
+            <ProfileImage width={200} tempImage = {tempImage} image={user.image}/>
         </div>
         <div className="card-body text-center">
             {!editMode && <span className="fs-3 d-block">{visibleUsername}</span>}
             {isEditButtonVisible && <Button onClick={() => setEditMode(true)}>Edit</Button>}
-            {editMode && <UserEditForm setEditMode={setEditMode}/>}
+            {editMode && <UserEditForm setEditMode={setEditMode} setTempImage={setTempImage} />}
         </div>
     </div>);
 }

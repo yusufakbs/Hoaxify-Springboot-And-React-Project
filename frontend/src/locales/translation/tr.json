@@ -7,5 +7,7 @@
   "passwordMismatch": "Sifreleriniz Eslesmiyor",
   "passwordRepeat": "Sifre Tekrari",
   "userNotFoundError": "Kullanici bulunamadi",
-  "login": "Giriş yap"
+  "login": "Giriş yap",
+  "profileImage": "Profil Fotografi"
+
 }
