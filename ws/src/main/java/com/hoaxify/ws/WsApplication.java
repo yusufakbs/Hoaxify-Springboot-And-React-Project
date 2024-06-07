@@ -25,7 +25,7 @@ public class WsApplication {
                 user.setUsername("user" + i);
                 user.setEmail("user" + i + "@gmail.com");
                 user.setPassword(passwordEncoder.encode("P4ssword"));
-                user.setActive(true);
+                user.setActive(i != 1);
                 userRepository.save(user);
             }
         });

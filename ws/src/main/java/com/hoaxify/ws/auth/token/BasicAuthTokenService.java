@@ -4,12 +4,14 @@ import com.hoaxify.ws.auth.dto.Credentials;
 import com.hoaxify.ws.user.UserService;
 import com.hoaxify.ws.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Base64;
 
 @Service
+@ConditionalOnProperty(name = "hoaxify.token-type", havingValue = "basic")
 public class BasicAuthTokenService implements TokenService {
 
     @Autowired
