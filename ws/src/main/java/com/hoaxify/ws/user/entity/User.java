@@ -1,7 +1,11 @@
 package com.hoaxify.ws.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hoaxify.ws.auth.token.Token;
 import jakarta.persistence.*;
+
+import java.util.List;
+
 
 @Entity
 @Table(name = "tbl_users", uniqueConstraints = @UniqueConstraint(columnNames = {"email"}))
@@ -25,6 +29,9 @@ public class User {
 
     @JsonIgnore
     private String activationToken;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    List<Token> tokens;
 
     public User(String username, String password, String email) {
         this.username = username;
@@ -89,5 +96,13 @@ public class User {
 
     public void setActivationToken(String activationToken) {
         this.activationToken = activationToken;
+    }
+
+    public List<Token> getTokens() {
+        return tokens;
+    }
+
+    public void setTokens(List<Token> tokens) {
+        this.tokens = tokens;
     }
 }

@@ -58,4 +58,11 @@ public class UserController {
         return new UserDTO(userService.userUpdate(id, userUpdate));
     }
 
+    @DeleteMapping("/api/v1/users/{id}")
+    @PreAuthorize("#id == principal.id")
+    GenericMessage deleteUser(@PathVariable long id ){
+        userService.deleteUser(id);
+        return new GenericMessage("User deleted successfully");
+    }
+
 }

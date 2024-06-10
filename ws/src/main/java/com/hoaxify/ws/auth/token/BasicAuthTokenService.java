@@ -40,4 +40,9 @@ public class BasicAuthTokenService implements TokenService {
         if (!passwordEncoder.matches(password, inDb.getPassword())) return null;
         return inDb;
     }
+
+    @Override
+    public void logout(String authorizationHeader) {
+
+    }
 }

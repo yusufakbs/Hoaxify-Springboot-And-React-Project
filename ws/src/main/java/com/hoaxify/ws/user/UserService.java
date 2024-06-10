@@ -90,4 +90,13 @@ public class UserService {
         }
         return userRepository.save(inDb);
     }
+
+    @Transactional
+    public void deleteUser(long id) {
+        User inDB = getUser(id);
+        if(inDB.getImage() != null) {
+            fileService.deleteProfileImage(inDB.getImage());
+        }
+        userRepository.delete(inDB);
+    }
 }

@@ -1,12 +1,12 @@
 import {Outlet} from "react-router-dom";
 import {LanguageSelector} from "./shared/components/LanguageSelector.jsx";
-import {NavBar} from "./shared/components/NavBar.jsx";
+import {Index} from "./shared/components/NavBar/index.jsx";
 import {AuthenticationContext} from "./shared/state/context.jsx";
 
 
 function App() {
     return (<AuthenticationContext>
-        <NavBar/>
+        <Index/>
         <div className="container mt-3">
             {<Outlet/>}
             <LanguageSelector/>

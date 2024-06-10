@@ -1,15 +1,23 @@
 import {Link} from "react-router-dom";
-import logo from "../../assets/hoaxify.png";
+import logo from "../../../assets/hoaxify.png";
 import {useTranslation} from "react-i18next";
-import {useAuthDispatch, useAuthState} from "../state/context.jsx";
-import {ProfileImage} from "./ProfileImage.jsx";
+import {useAuthDispatch, useAuthState} from "../../state/context.jsx";
+import {ProfileImage} from "../ProfileImage.jsx";
+import {logout} from "./api.js";
 
-export function NavBar() {
+export function Index() {
     const {t} = useTranslation();
     const authState = useAuthState();
     const dispatch = useAuthDispatch();
 
-    const onClickLogout = () => {
+    const onClickLogout = async () => {
+        try {
+            await logout();
+        }catch {
+
+        }finally {
+            dispatch({type:'logout-success'});
+        }
         dispatch({type: 'logout-success'});
     }
     return (<nav className="navbar navbar-expand bg-body-tertiary shadow-sm">
